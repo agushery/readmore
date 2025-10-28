@@ -55,6 +55,7 @@ class ReadMoreText extends StatefulWidget {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.selectionColor,
+    this.onTapGesture,
   })  : richData = null,
         richPreData = null,
         richPostData = null;
@@ -88,6 +89,7 @@ class ReadMoreText extends StatefulWidget {
     this.textWidthBasis,
     this.textHeightBehavior,
     this.selectionColor,
+    this.onTapGesture,
   })  : data = null,
         annotations = null,
         preDataText = null,
@@ -162,6 +164,9 @@ class ReadMoreText extends StatefulWidget {
 
   // DefaultTextStyle end
 
+  // on tap gesture
+  final void Function()? onTapGesture;
+
   @override
   ReadMoreTextState createState() => ReadMoreTextState();
 }
@@ -180,6 +185,10 @@ class ReadMoreTextState extends State<ReadMoreText> {
       widget.isCollapsed ?? (_isCollapsed ??= ValueNotifier(true));
 
   void _onTap() {
+    if (widget.onTapGesture != null) {
+      return widget.onTapGesture?.call();
+    }
+
     if (widget.isExpandable) {
       _effectiveIsCollapsed.value = !_effectiveIsCollapsed.value;
     }
